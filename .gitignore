@@ -1,0 +1,18 @@
+.env
+music-library-fe/node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+music-library-be/go.sum
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

@@ -1,0 +1,57 @@
+version: "3.8"
+
+networks:
+  appnet:
+    driver: bridge
+
+services:
+  frontend:
+    build:
+      context: ./music-library-fe
+      dockerfile: Dockerfile # Dockerfile.prod for production
+    volumes:
+      - ./music-library-fe/:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    networks:
+      - appnet
+    depends_on:
+      - music-library-be
+      - music-library-db
+
+  music-library-be:
+    build:
+      context: ./music-library-be
+    environment:
+      # GIN_MODE: release
+      PG_HOST: ${PG_HOST}
+      PG_USER: ${PG_USER}
+      PG_PASSWORD: ${PG_PASS}
+      PG_DBNAME: ${PG_DB}
+      PG_PORT: ${PG_DB_PORT}
+    networks:
+      - appnet
+    ports:
+      - "8080:8080"
+    depends_on:
+      - music-library-db
+
+  music-library-db:
+    image: postgres:latest
+    ports:
+      - "${PG_DB_PORT}:${PG_DB_PORT}"
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      PGPORT: ${PG_DB_PORT}
+    networks:
+      - appnet
+    # network_mode: bridge
+    volumes:
+      - postgres-app-data:/var/lib/postgresql/data
+      # - ./postgres_scripts/users.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres-app-data:
