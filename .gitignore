@@ -1,5 +1,6 @@
 .env
 music-library-fe/node_modules
+album-cover-api/node_modules
 .DS_Store
 dist
 dist-ssr

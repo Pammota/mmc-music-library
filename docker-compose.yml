@@ -9,6 +9,8 @@ services:
     build:
       context: ./music-library-fe
       dockerfile: Dockerfile # Dockerfile.prod for production
+    environment:
+      VITE_SPOTIFY_TOKEN: ${SPOTIFY}
     volumes:
       - ./music-library-fe/:/app
       - /app/node_modules
@@ -52,6 +54,14 @@ services:
     volumes:
       - postgres-app-data:/var/lib/postgresql/data
       # - ./postgres_scripts/users.sql:/docker-entrypoint-initdb.d/init.sql
+
+  album-cover-api:
+    build:
+      context: ./album-cover-api
+    ports:
+      - "4000:4000"
+    networks:
+      - appnet
 
 volumes:
   postgres-app-data:

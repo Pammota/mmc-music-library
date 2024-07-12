@@ -37,6 +37,29 @@ type JSONAlbum struct {
 }
 
 type JSONSong struct {
+	ID     string `json:"id"`
 	Title  string `json:"title"`
 	Length string `json:"length"`
+}
+
+// JSOM return models
+
+type ReturnJSONArtist struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
+type ReturnJSONAlbum struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	ArtistName  string `json:"artistName"`
+}
+
+type ReturnJSONSong struct {
+	ID         string `json:"id"`
+	Title      string `json:"title"`
+	Length     string `json:"length"`
+	AlbumTitle string `json:"albumTitle"`
+	ArtistName string `json:"artistName"`
 }
